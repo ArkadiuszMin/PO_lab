@@ -7,7 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnimalTest {
     @Test
     void tests(){
-        Animal elephant = new Animal();
+        IWorldMap map = new RectangularMap(4, 4);
+        Animal elephant = new Animal(map);
         assertEquals(MapDirection.NORTH, elephant.getDirection());
         assertTrue(elephant.isAt(new Vector2d(2, 2)));
         elephant.move(MoveDirection.FORWARD);

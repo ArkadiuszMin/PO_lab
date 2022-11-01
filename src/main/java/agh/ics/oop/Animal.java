@@ -4,12 +4,31 @@ public class Animal {
     private MapDirection direction = MapDirection.NORTH;
     private Vector2d position = new Vector2d(2, 2);
 
+    private IWorldMap map;
+    public Animal(){}
+    public Animal(IWorldMap map){
+        this.map = map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition){
+        this.map = map;
+        this.position = initialPosition;
+    }
     public MapDirection getDirection(){
         return this.direction;
     }
 
+    public Vector2d getPosition(){
+        return this.position;
+    }
+
     public String toString(){
-        return "pozycja: (" + this.position.x + ", " + this.position.y + "). Orientacja: " + this.direction;
+        return switch(direction){
+            case NORTH -> "^";
+            case SOUTH -> "v";
+            case WEST -> "<";
+            case EAST -> ">";
+        };
     }
 
     public boolean isAt(Vector2d position){
@@ -17,22 +36,22 @@ public class Animal {
     }
 
     public void move(MoveDirection direction){
+        Vector2d moveTo = new Vector2d(-1, -1);
         switch(direction){
             case RIGHT:
                 this.direction = this.direction.next();
-                break;
+                return;
             case LEFT: this.direction = this.direction.previous();
-                break;
+                return;
             case FORWARD:
-                if(this.position.add(this.direction.toUnitVector()).follows(new Vector2d(0, 0)) && this.position.add(this.direction.toUnitVector()).precedes(new Vector2d(4, 4))){
-                    this.position = this.position.add(this.direction.toUnitVector());
-                }
+                moveTo = this.position.add(this.direction.toUnitVector());
                 break;
             case BACKWARD:
-                if(this.position.substract(this.direction.toUnitVector()).follows(new Vector2d(0, 0)) && this.position.substract(this.direction.toUnitVector()).precedes(new Vector2d(4, 4))){
-                    this.position = this.position.substract(this.direction.toUnitVector());
-                }
+                moveTo = this.position.substract(this.direction.toUnitVector());
                 break;
+        }
+        if(map.canMoveTo(moveTo)){
+            this.position = moveTo;
         }
     }
 }
