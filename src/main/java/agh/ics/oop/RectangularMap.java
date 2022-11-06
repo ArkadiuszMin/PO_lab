@@ -3,11 +3,9 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RectangularMap implements IWorldMap{
+public class RectangularMap extends AbstractWorldMap{
     private final int width;
     private final int height;
-
-    private List<Animal> Zwierzaczki = new ArrayList<Animal>();
 
     public List<Animal> getZwierzaczki(){
         return this.Zwierzaczki;
@@ -18,12 +16,16 @@ public class RectangularMap implements IWorldMap{
         this.height = height;
     }
 
-    public String toString(){
-        Vector2d koniec = new Vector2d(width, height);
-        Vector2d poczatek = new Vector2d(0, 0);
-        MapVisualizer mapVisualizer = new MapVisualizer(this);
-        return mapVisualizer.draw(poczatek, koniec);
+    public Vector2d upperLeftCorner(){
+        return new Vector2d(0, 0);
     }
+
+    public Vector2d lowerRightCorner(){
+        return new Vector2d(width-1, height-1);
+    }
+
+
+
     @Override
     public boolean canMoveTo(Vector2d position) {
         Vector2d koniec = new Vector2d(width, height);
@@ -35,31 +37,12 @@ public class RectangularMap implements IWorldMap{
     }
 
     @Override
-    public boolean place(Animal animal) {
-        if(!this.isOccupied(animal.getPosition())){
-            this.Zwierzaczki.add(animal);
-            return true;
-        }
+    boolean checkIfIsOccupied(Vector2d position) {
         return false;
     }
 
     @Override
-    public boolean isOccupied(Vector2d position) {
-        for(Animal animal : this.Zwierzaczki){
-            if(animal.isAt(position)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public Object objectAt(Vector2d position) {
-        for(Animal animal : this.Zwierzaczki) {
-            if(animal.isAt(position)){
-                return animal;
-            }
-        }
+    Object checkIfObjectAt(Vector2d position) {
         return null;
     }
 }
