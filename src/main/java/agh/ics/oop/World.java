@@ -10,6 +10,5 @@ public class World {
         IEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
         out.print(map.toString());
-
     }
 }

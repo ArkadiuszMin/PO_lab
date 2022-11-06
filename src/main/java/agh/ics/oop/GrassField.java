@@ -14,7 +14,7 @@ public class GrassField extends AbstractWorldMap{
 
     public GrassField(int number){
         this.number = number;
-        spawnerTrawki();
+        spawnerTrawki(this.number);
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -24,6 +24,13 @@ public class GrassField extends AbstractWorldMap{
             }
         }
         if(position.follows(new Vector2d(0, 0))){
+            for(Grass trawka: Trawka){
+                if(trawka.isAt(position)){
+                    Trawka.remove(trawka);
+                    spawnerTrawki(1);
+                    break;
+                }
+            }
             return true;
         }
         return false;
@@ -86,15 +93,15 @@ public class GrassField extends AbstractWorldMap{
     Object checkIfObjectAt(Vector2d position) {
         for(Grass trawka: Trawka){
             if(trawka.isAt(position)){
-                return trawka;
+                return (Grass)trawka;
             }
         }
         return null;
     }
 
-    public void spawnerTrawki(){
+    public void spawnerTrawki(int ilosc){
         int rozmiar = (int)(sqrt(this.number*10));
-        for(int i=0; i<this.number; i++){
+        for(int i=0; i<ilosc; i++){
             int x = (int)(Math.random()*rozmiar);
             int y = (int)(Math.random()*rozmiar);
             while(isOccupied(new Vector2d(x, y))){

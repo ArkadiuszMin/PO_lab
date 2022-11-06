@@ -14,6 +14,13 @@ public class SimulationEngine implements IEngine{
                 map.place(animal);
                 this.Zwierzaczki.add(animal);
             }
+            else{
+                if(map.objectAt(vector2d) instanceof Grass){
+                    Animal animal = new Animal(map, vector2d);
+                    map.place(animal);
+                    this.Zwierzaczki.add(animal);
+                }
+            }
         }
         this.moveDirections = moveDirections;
     }
