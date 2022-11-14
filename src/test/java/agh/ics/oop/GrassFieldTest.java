@@ -8,10 +8,13 @@ class GrassFieldTest {
 
     @Test
     void tests(){
-        IWorldMap map = new GrassField(10);
+        AbstractWorldMap map = new GrassField(10);
         Animal owca = new Animal(map, new Vector2d(2, 3));
         Animal krowa = new Animal(map, new Vector2d(3, 4));
         Animal krab = new Animal(map, new Vector2d(6, 1));
+        krab.addObserver(map);
+        krowa.addObserver(map);
+        owca.addObserver(map);
         Vector2d owcavec = new Vector2d(2, 3);
         Vector2d krowavec = new Vector2d(3, 4);
         Vector2d krabvec = new Vector2d(6, 1);

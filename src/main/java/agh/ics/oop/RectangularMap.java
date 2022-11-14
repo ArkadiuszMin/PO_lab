@@ -2,18 +2,19 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RectangularMap extends AbstractWorldMap{
     private final int width;
     private final int height;
 
-    public List<Animal> getZwierzaczki(){
-        return this.Zwierzaczki;
-    }
-
     public RectangularMap(int width, int height){
         this.width = width;
         this.height = height;
+    }
+
+    public Map getZwierzaczki(){
+        return this.Zwierzaczki;
     }
 
     public Vector2d upperLeftCorner(){

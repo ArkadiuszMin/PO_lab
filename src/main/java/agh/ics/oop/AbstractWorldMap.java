@@ -1,12 +1,17 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
-abstract public class AbstractWorldMap implements IWorldMap {
+abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
-    protected List<Animal> Zwierzaczki = new ArrayList<Animal>();
+    protected Map<Vector2d, Animal> Zwierzaczki = new HashMap<>();
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d NewPosition){
+        Animal temp = Zwierzaczki.get(oldPosition);
+        Zwierzaczki.remove(oldPosition);
+        Zwierzaczki.put(NewPosition, temp);
+    }
 
     @Override
     public String toString(){
@@ -31,26 +36,22 @@ abstract public class AbstractWorldMap implements IWorldMap {
     @Override
     public boolean place(Animal animal) {
         if(this.canMoveTo(animal.getPosition())){
-            this.Zwierzaczki.add(animal);
+            this.Zwierzaczki.put(animal.getPosition(), animal);
             return true;
         }
         return false;
     }
     @Override
     public boolean isOccupied(Vector2d position) {
-        for(Animal animal : this.Zwierzaczki){
-            if(animal.isAt(position)){
-                return true;
-            }
+        if(Zwierzaczki.containsKey(position)){
+            return true;
         }
         return checkIfIsOccupied(position);
     }
     @Override
     public Object objectAt(Vector2d position) {
-        for(Animal animal : this.Zwierzaczki) {
-            if(animal.isAt(position)){
-                return animal;
-            }
+        if(Zwierzaczki.containsKey(position)){
+            return Zwierzaczki.get(position);
         }
         return checkIfObjectAt(position);
     }

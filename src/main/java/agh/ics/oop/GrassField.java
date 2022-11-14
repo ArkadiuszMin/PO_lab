@@ -18,10 +18,8 @@ public class GrassField extends AbstractWorldMap{
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
-        for(Animal zwierzak: Zwierzaczki){
-            if(zwierzak.isAt(position)){
-                return false;
-            }
+        if(Zwierzaczki.containsKey(position)){
+            return false;
         }
         if(position.follows(new Vector2d(0, 0))){
             for(Grass trawka: Trawka){
@@ -38,12 +36,12 @@ public class GrassField extends AbstractWorldMap{
     public Vector2d upperLeftCorner(){
         int x1 = Integer.MAX_VALUE;
         int y1 = Integer.MAX_VALUE;
-        for(Animal zwierzak: Zwierzaczki){
-            if(zwierzak.getPosition().x < x1){
-                x1=zwierzak.getPosition().x;
+        for(Vector2d key : Zwierzaczki.keySet()){
+            if(key.x < x1){
+                x1=key.x;
             }
-            if(zwierzak.getPosition().y < y1){
-                y1=zwierzak.getPosition().y;
+            if(key.y < y1){
+                y1=key.y;
             }
         }
         for(Grass trawka: Trawka){
@@ -60,12 +58,12 @@ public class GrassField extends AbstractWorldMap{
     public Vector2d lowerRightCorner(){
         int x2 = Integer.MIN_VALUE;
         int y2 = Integer.MIN_VALUE;
-        for(Animal zwierzak: Zwierzaczki){
-            if(zwierzak.getPosition().x > x2){
-                x2=zwierzak.getPosition().x;
+        for(Vector2d key : Zwierzaczki.keySet()){
+            if(key.x > x2){
+                x2=key.x;
             }
-            if(zwierzak.getPosition().y > y2) {
-                y2 = zwierzak.getPosition().y;
+            if(key.y > y2) {
+                y2 = key.y;
             }
         }
         for(Grass trawka: Trawka){

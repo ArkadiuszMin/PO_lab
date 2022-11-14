@@ -17,7 +17,7 @@ class SimulationEngineTest {
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
         IEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
-        assertEquals(map.getZwierzaczki().get(1).getPosition(), new Vector2d(3,5));
-        assertEquals(map.getZwierzaczki().get(0).getPosition(), new Vector2d(2,0));
+        assertTrue((map.isOccupied(new Vector2d(3,5))));
+        assertTrue((map.isOccupied(new Vector2d(2,0))));
     }
 }
