@@ -15,16 +15,12 @@ public class Animal {
     }
 
     public void removeObserver(IPositionChangeObserver observer){
-        for(IPositionChangeObserver obserwator : Observers){
-            if(obserwator.equals(observer)){
-                Observers.remove(observer);
-            }
-        }
+        Observers.remove(observer);
     }
 
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
-        for(IPositionChangeObserver obserwator : Observers){
-            obserwator.positionChanged(oldPosition, newPosition);
+        for(IPositionChangeObserver observer : Observers){
+            observer.positionChanged(oldPosition, newPosition);
         }
     }
     private IWorldMap map;

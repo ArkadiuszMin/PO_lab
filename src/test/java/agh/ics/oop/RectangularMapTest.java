@@ -33,13 +33,13 @@ class RectangularMapTest {
         assertTrue(map.isOccupied(new Vector2d(7, 2)));
         assertTrue(map.place(new Animal(map, new Vector2d(5, 1))));
         assertTrue(map.isOccupied(new Vector2d(5, 1)));
-        assertFalse(map.place(new Animal(map, owcavec)));
-        assertFalse(map.place(new Animal(map, krabvec)));
+        assertThrows(IllegalArgumentException.class, () -> map.place(new Animal(map, owcavec)));
+        assertThrows(IllegalArgumentException.class, () -> map.place(new Animal(map, krabvec)));
         assertTrue(map.canMoveTo(new Vector2d(2, 2)));
         assertTrue(map.canMoveTo(new Vector2d(3, 3)));
-        assertFalse(map.canMoveTo(krabvec));
-        assertFalse(map.canMoveTo(new Vector2d(100, 1)));
-        assertFalse(map.canMoveTo(new Vector2d(5, -294)));
+        assertThrows(IllegalArgumentException.class,() -> map.canMoveTo(krabvec));
+        assertThrows(IllegalArgumentException.class, ()->map.canMoveTo(new Vector2d(100, 1)));
+        assertThrows(IllegalArgumentException.class, () -> map.canMoveTo(new Vector2d(5, -294)));
 
     }
 }

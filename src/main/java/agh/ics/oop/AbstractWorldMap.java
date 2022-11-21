@@ -4,21 +4,24 @@ import java.util.*;
 
 abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
-    protected Map<Vector2d, Animal> Zwierzaczki = new HashMap<>();
+    protected Map<Vector2d, Animal> Animals = new HashMap<>();
+
+    protected MapBoundary mapBoundary = new MapBoundary();
 
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d NewPosition){
-        Animal temp = Zwierzaczki.get(oldPosition);
-        Zwierzaczki.remove(oldPosition);
-        Zwierzaczki.put(NewPosition, temp);
+        Animal temp = Animals.get(oldPosition);
+        Animals.remove(oldPosition);
+        Animals.put(NewPosition, temp);
+        mapBoundary.positionChanged(oldPosition, NewPosition);
     }
 
     @Override
     public String toString(){
-        Vector2d poczatek = upperLeftCorner();
-        Vector2d koniec = lowerRightCorner();
+        Vector2d begin = upperLeftCorner();
+        Vector2d end = lowerRightCorner();
         MapVisualizer mapVisualizer = new MapVisualizer(this);
-        return mapVisualizer.draw(poczatek, koniec);
+        return mapVisualizer.draw(begin, end);
     }
 
     @Override
@@ -26,8 +29,8 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         return false;
     }
 
-    abstract Vector2d upperLeftCorner();
-    abstract Vector2d lowerRightCorner();
+    public abstract Vector2d upperLeftCorner();
+    public abstract Vector2d lowerRightCorner();
 
     abstract boolean checkIfIsOccupied(Vector2d position);
 
@@ -36,22 +39,23 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     @Override
     public boolean place(Animal animal) {
         if(this.canMoveTo(animal.getPosition())){
-            this.Zwierzaczki.put(animal.getPosition(), animal);
+            this.Animals.put(animal.getPosition(), animal);
+            mapBoundary.add(animal.getPosition());
             return true;
         }
         return false;
     }
     @Override
     public boolean isOccupied(Vector2d position) {
-        if(Zwierzaczki.containsKey(position)){
+        if(Animals.containsKey(position)){
             return true;
         }
         return checkIfIsOccupied(position);
     }
     @Override
     public Object objectAt(Vector2d position) {
-        if(Zwierzaczki.containsKey(position)){
-            return Zwierzaczki.get(position);
+        if(Animals.containsKey(position)){
+            return Animals.get(position);
         }
         return checkIfObjectAt(position);
     }

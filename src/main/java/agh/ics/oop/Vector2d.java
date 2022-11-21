@@ -32,18 +32,18 @@ public class Vector2d {
     }
 
     public Vector2d lowerLeft(Vector2d other){
-        Vector2d wynik = new Vector2d(Math.min(this.x, other.x), Math.min(this.y, other.y));
-        return wynik;
+        Vector2d result = new Vector2d(Math.min(this.x, other.x), Math.min(this.y, other.y));
+        return result;
     }
 
     public Vector2d add(Vector2d other){
-        Vector2d wynik = new Vector2d(this.x + other.x, this.y + other.y);
-        return wynik;
+        Vector2d result = new Vector2d(this.x + other.x, this.y + other.y);
+        return result;
     }
 
     public Vector2d substract(Vector2d other){
-        Vector2d wynik = new Vector2d(this.x - other.x, this.y - other.y);
-        return wynik;
+        Vector2d result = new Vector2d(this.x - other.x, this.y - other.y);
+        return result;
     }
 
     public boolean equals(Object other){
@@ -58,7 +58,7 @@ public class Vector2d {
     }
 
     public Vector2d opposite(){
-        Vector2d wynik = new Vector2d(-this.x, -this.y);
-        return wynik;
+        Vector2d result = new Vector2d(-this.x, -this.y);
+        return result;
     }
 }

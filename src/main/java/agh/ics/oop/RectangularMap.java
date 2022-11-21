@@ -13,8 +13,8 @@ public class RectangularMap extends AbstractWorldMap{
         this.height = height;
     }
 
-    public Map getZwierzaczki(){
-        return this.Zwierzaczki;
+    public Map getAnimals(){
+        return this.Animals;
     }
 
     public Vector2d upperLeftCorner(){
@@ -34,7 +34,7 @@ public class RectangularMap extends AbstractWorldMap{
         if(!this.isOccupied(position) && position.follows(poczatek) && position.precedes(koniec)){
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("you can't move to " + position.toString());
     }
 
     @Override

@@ -5,20 +5,20 @@ import java.util.List;
 
 public class SimulationEngine implements IEngine{
     private MoveDirection[] moveDirections;
-    private List<Animal> Zwierzaczki = new ArrayList<>();
+    private List<Animal> Animals = new ArrayList<>();
 
     public SimulationEngine(MoveDirection[] moveDirections, IWorldMap map, Vector2d[] vector2ds) {
         for(Vector2d vector2d : vector2ds){
-            if(!map.isOccupied(vector2d)){
+            if(map.canMoveTo(vector2d)){
                 Animal animal = new Animal(map, vector2d);
                 map.place(animal);
-                this.Zwierzaczki.add(animal);
+                this.Animals.add(animal);
             }
             else{
                 if(map.objectAt(vector2d) instanceof Grass){
                     Animal animal = new Animal(map, vector2d);
                     map.place(animal);
-                    this.Zwierzaczki.add(animal);
+                    this.Animals.add(animal);
                 }
             }
         }
@@ -27,9 +27,9 @@ public class SimulationEngine implements IEngine{
 
     @Override
     public void run() {
-        int n = this.Zwierzaczki.size();
+        int n = this.Animals.size();
         for(int i = 0; i<this.moveDirections.length; i++){
-            this.Zwierzaczki.get(i%n).move(this.moveDirections[i]);
+            this.Animals.get(i%n).move(this.moveDirections[i]);
         }
     }
 }
