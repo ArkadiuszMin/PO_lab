@@ -20,6 +20,8 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     public String toString(){
         Vector2d begin = upperLeftCorner();
         Vector2d end = lowerRightCorner();
+        System.out.println(begin.toString());
+        System.out.println(end.toString());
         MapVisualizer mapVisualizer = new MapVisualizer(this);
         return mapVisualizer.draw(begin, end);
     }
@@ -39,6 +41,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     @Override
     public boolean place(Animal animal) {
         if(this.canMoveTo(animal.getPosition())){
+            System.out.println("test dla place worldmap");
             this.Animals.put(animal.getPosition(), animal);
             mapBoundary.add(animal.getPosition());
             return true;

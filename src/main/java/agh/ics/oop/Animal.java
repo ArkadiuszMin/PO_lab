@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class Animal {
+public class Animal implements IMapElement{
     private MapDirection direction = MapDirection.NORTH;
     private Vector2d position = new Vector2d(2, 2);
 
@@ -31,6 +31,7 @@ public class Animal {
 
     public Animal(IWorldMap map, Vector2d initialPosition){
         this.map = map;
+        addObserver((IPositionChangeObserver) map);
         this.position = initialPosition;
     }
     public MapDirection getDirection(){
@@ -48,6 +49,19 @@ public class Animal {
             case WEST -> "<";
             case EAST -> ">";
         };
+    }
+
+    public String toImage(){
+        return switch(direction){
+            case NORTH -> "src/main/resources/up.png";
+            case SOUTH -> "src/main/resources/down.png";
+            case WEST -> "src/main/resources/left.png";
+            case EAST -> "src/main/resources/right.png";
+        };
+    }
+
+    public String toLabel(){
+        return "Z " + this.getPosition().toString();
     }
 
     public boolean isAt(Vector2d position){
@@ -71,6 +85,7 @@ public class Animal {
         }
         if(map.canMoveTo(moveTo)){
             positionChanged(this.position, moveTo);
+            this.position = moveTo;
         }
     }
 }
